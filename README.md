@@ -9,10 +9,13 @@ Then, from the terminal:
 
 
 import nltk
+
 nltk.download('stopwords')
+
 nltk.download('punkt')
 
 cd AggregatorSite
+
 python manage.py flush -> then enter yes
 
 Then, enter in the terminal:
@@ -22,6 +25,7 @@ python manage.py shell
 Then, in the shell:
 
 from NewsApp.utils import init_biases
+
 init_biases()
 
 Finally, to run the program:
