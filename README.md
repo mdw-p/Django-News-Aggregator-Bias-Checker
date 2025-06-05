@@ -11,7 +11,14 @@ DB_PORT=3306
 
 NEWS_API_KEY= Valid API Key for NewsAPI
 ```
-Put this .env file in the OUTSIDE AggregatorSite Folder - on the same level as /templates/
+Put this .env file in the OUTSIDE AggregatorSite Folder - folde structure should look like this:
+
+AgreggatorSite/
+      -> AggregatorSite/
+      -> NewsApp/
+      -> templates/
+      -> .env
+      -> manage.py
 
 
 Commands to install:
