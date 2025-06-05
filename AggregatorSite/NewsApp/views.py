@@ -7,9 +7,6 @@ from .utils import check_data_age, retrieve_more_articles, add_to_db, cosine_sim
 
 # Make sure all functions follow my_func convention, all classes MyClass, all modules
 
-def index(request):
-    return redirect("render_articles",request=request)
-
 def render_articles(request):
     # check age of FetchMetadata: (find method that allows for first use)
     retrieve_more_articles()
