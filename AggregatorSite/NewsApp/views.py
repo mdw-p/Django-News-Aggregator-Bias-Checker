@@ -2,8 +2,8 @@ from django.shortcuts import redirect, render
 from NewsApp.models import Article
 from .utils import check_data_age, retrieve_more_articles, add_to_db, cosine_similarity
 
-#NEWSAPI KEY: 4de368a777034a8185905d81529e4d4c
-#Bitcoin EXAMPLE: GET https://newsapi.org/v2/everything?q=bitcoin&apiKey=4de368a777034a8185905d81529e4d4c
+#NEWSAPI KEY: ####
+#Bitcoin EXAMPLE: GET https://newsapi.org/v2/everything?q=bitcoin&apiKey=####
 
 # Make sure all functions follow my_func convention, all classes MyClass, all modules
 

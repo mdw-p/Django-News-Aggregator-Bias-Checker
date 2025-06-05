@@ -1,6 +1,8 @@
 from datetime import timedelta
+from pathlib import Path
 from django.utils import timezone
 import json
+import os
 from NewsApp.models import Article, Source
 from .fetch_metadata import FetchMetadata
 from nltk.corpus import stopwords
@@ -8,6 +10,10 @@ from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 import requests
 import regex
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+from dotenv import load_dotenv
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # CHANGE TO CJSON for FASTER IMPLEMENTATION
 
@@ -53,7 +59,7 @@ def check_data_age():
     return singleton_metadata.last_loaded
 
 def retrieve_more_articles():
-    URL = "https://newsapi.org/v2/everything?q='the'&apiKey=4de368a777034a8185905d81529e4d4c"
+    URL = "https://newsapi.org/v2/everything?q='the'&apiKey=" + os.environ['NEWS_API_KEY']
     r = requests.get(url = URL)
 
     # extracting data in json format

@@ -74,14 +74,17 @@ WSGI_APPLICATION = 'AggregatorSite.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
+from dotenv import load_dotenv
+load_dotenv(os.path.join(BASE_DIR, '.env'))
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'news_agg_db',
-        'USER': 'root',
-        'PASSWORD': 'enaravzqz123!',
-        'HOST': 'localhost',  # Set to the MySQL server's host, e.g., 'localhost'
-        'PORT': '3306',       # Set to the MySQL server's port, if different from the default (3306)
+        'NAME': os.environ['DB_NAME'],
+        'USER': os.environ['DB_USER'],
+        'PASSWORD': os.environ['DB_PASSWORD'],
+        'HOST': os.environ.get('DB_HOST', 'localhost'),
+        'PORT': os.environ.get('DB_PORT', '3306'),
     }
 }
 
