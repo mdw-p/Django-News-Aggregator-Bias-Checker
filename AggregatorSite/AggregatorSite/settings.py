@@ -76,8 +76,12 @@ WSGI_APPLICATION = 'AggregatorSite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'news_agg_db',
+        'USER': 'root',
+        'PASSWORD': 'enaravzqz123!',
+        'HOST': 'localhost',  # Set to the MySQL server's host, e.g., 'localhost'
+        'PORT': '3306',       # Set to the MySQL server's port, if different from the default (3306)
     }
 }
 

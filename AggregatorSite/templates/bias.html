@@ -4,7 +4,7 @@
 <div>
     <h1 class="mb-4">Original Article:</h1>
 </div>
-<div class="row row-cols-1 row-cols-md-2 g-4">
+<div class="row row-cols-1 row-cols-md-2 g-4 w-auto">
     <div class="col">
         <div class="card h-100">
             <img class="card-img-top" src="{{ original_article.urlToImage }}" alt="Card image cap">
@@ -26,11 +26,12 @@
 <hr>
 <h1 class="mb-4">Bias Breakdown for this Topic:</h1>
 
-<div class="container">
+<div class="container w-auto">
     <div class="row">
         <div class="col-sm">
             <h4 class="text-danger">Far Left</h4>
             {% for article in articles.far_left %}
+            <div class="row">
             <div class="card h-100" style="width: 15rem;">
                 <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
                 <div class="card-body">
@@ -40,8 +41,8 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ article.source_name }}</small>
                     <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
-                    <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
                 </div>
+            </div>
             </div>
             {% empty %}
             <p>No articles</p>
@@ -50,6 +51,7 @@
         <div class="col-sm">
             <h4 class="text-danger">Left</h4>
             {% for article in articles.left %}
+            <div class="row">
             <div class="card h-100" style="width: 15rem;">
                 <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
                 <div class="card-body">
@@ -59,8 +61,8 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ article.source_name }}</small>
                     <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
-                    <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
                 </div>
+            </div>
             </div>
             {% empty %}
             <p>No articles</p>
@@ -70,7 +72,7 @@
         <div class="col-sm">
             <h4 class="text-warning">Centre-Left</h4>
             {% for article in articles.centre_left %}
-            <div class="row row-cols-1 row-cols-md-7 g-4">
+            <div class="row">
             <div class="card h-100" style="width: 10rem;">
                 <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
                 <div class="card-body">
@@ -80,7 +82,6 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ article.source_name }}</small>
                     <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
-                    <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
                 </div>
             </div>
             </div>
@@ -92,6 +93,7 @@
         <div class="col-sm">
             <h4 class="text-warning">Centre</h4>
             {% for article in articles.centre %}
+            <div class="row">
             <div class="card h-100" style="width: 15rem;">
                 <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
                 <div class="card-body">
@@ -101,8 +103,8 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ article.source_name }}</small>
                     <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
-                    <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
                 </div>
+            </div>
             </div>
             {% empty %}
             <p>No articles</p>
@@ -112,6 +114,7 @@
         <div class="col-sm">
             <h4 class="text-info">Centre-Right</h4>
             {% for article in articles.centre_right %}
+            <div class="row">
             <div class="card h-100" style="width: 15rem;">
                 <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
                 <div class="card-body">
@@ -121,8 +124,8 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ article.source_name }}</small>
                     <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
-                    <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
                 </div>
+            </div>
             </div>
             {% empty %}
             <p>No articles</p>
@@ -132,6 +135,7 @@
         <div class="col-sm">
             <h4 class="text-primary">Right</h4>
             {% for article in articles.right %}
+            <div class="row">
             <div class="card h-100" style="width: 15rem;">
                 <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
                 <div class="card-body">
@@ -141,16 +145,17 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ article.source_name }}</small>
                     <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
-                    <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
                 </div>
+            </div>
             </div>
             {% empty %}
             <p>No articles</p>
             {% endfor %}
         </div>
-        <div class="col-sm">
+        <div class="col-sm w-auto">
             <h4 class="text-primary">Far Right</h4>
             {% for article in articles.far_right %}
+            <div class="row">
             <div class="card h-100" style="width: 15rem;">
                 <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
                 <div class="card-body">
@@ -160,8 +165,8 @@
                 <div class="card-footer d-flex justify-content-between align-items-center">
                     <small class="text-muted">{{ article.source_name }}</small>
                     <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
-                    <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
                 </div>
+            </div>
             </div>
             {% empty %}
             <p>No articles</p>
@@ -173,21 +178,19 @@
 <h1>Unknown Bias:</h1>
 <div class="row row-cols-1 row-cols-md-2 g-4">
     {% for article in articles.unknown %}
-    <div class="col">
-        <div class="card h-100" style="width: 15rem;">
-            <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
-            <div class="card-body">
-                <h5 class="card-title">{{ article.title }}</h5>
-                <p class="card-text">{{ article.description }}</p>
-            </div>
-            <div class="card-footer d-flex justify-content-between align-items-center">
-                <small class="text-muted">{{ article.source_name }}</small>
-                <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
-                <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
-            </div>
+    <div class="card h-100" style="width: 15rem;">
+        <img class="card-img-top" src="{{ article.urlToImage }}" alt="Card image cap">
+        <div class="card-body">
+            <h5 class="card-title">{{ article.title }}</h5>
+            <p class="card-text">{{ article.description }}</p>
         </div>
-        {% empty %}
-        <p>No articles</p>
+        <div class="card-footer d-flex justify-content-between align-items-center">
+            <small class="text-muted">{{ article.source_name }}</small>
+            <a href="{{ article.url }}" class="btn btn-sm btn-primary" target="_blank">Read More</a>
+            <a href="http://127.0.0.1:8000/NewsApp/Articles/{{ article.id }}" class="btn btn-sm btn-primary" target="_blank">Check Bias</a>
+        </div>
+    {% empty %}
+    <p>No articles</p>
     </div>
     {% endfor %}
 </div>
