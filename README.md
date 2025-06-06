@@ -11,6 +11,8 @@ DB_PORT=3306
 
 NEWS_API_KEY= Valid API Key for NewsAPI
 ```
+You can get a NewsAPI key for free, from: https://newsapi.org/register
+
 Put this .env file in the OUTSIDE AggregatorSite Folder - folder structure should look like this:
 ```
 AgreggatorSite/
