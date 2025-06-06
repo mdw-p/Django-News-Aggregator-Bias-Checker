@@ -15,7 +15,14 @@ class SingletonMeta(type):
 class FetchMetadata(metaclass=SingletonMeta):
     def __init__(self):
         self.last_loaded = timezone.now()
+        self.first = True
     def set_time(self):
         self.last_loaded = timezone.now()
     def return_time(self):
         return self.last_loaded
+    def is_first(self):
+        if self.first == True:
+            self.first = False
+            return True
+        else:
+            return False
