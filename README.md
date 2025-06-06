@@ -35,7 +35,18 @@ nltk.download('stopwords')
 nltk.download('punkt')
 
 cd AggregatorSite
-
+```
+Make sure you are in the following folder - the OUTER AggregatorSite folder:
+```
+*** AgreggatorSite/ ***
+      -> AggregatorSite/
+      -> NewsApp/
+      -> templates/
+      -> .env
+      -> manage.py
+```
+Then, in the terminal run
+```
 python manage.py flush
 ```
 Then, enter yes:
@@ -52,7 +63,7 @@ init_biases()
 
 quit()
 ```
-Finally, to run the program:
+Finally, to run the program, enter in the shell:
 ```
 python manage.py runserver
 ```
