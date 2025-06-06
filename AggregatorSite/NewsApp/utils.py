@@ -54,18 +54,16 @@ def add_to_db(data):
             message = template.format(type(ex).__name__, ex.args)
             print(message)
 
-def check_data_age():
-    singleton_metadata = FetchMetadata()
-    return singleton_metadata.last_loaded
-
 def retrieve_more_articles():
     URL = "https://newsapi.org/v2/everything?q='the'&apiKey=" + os.environ['NEWS_API_KEY']
     r = requests.get(url = URL)
 
+    # delete articles currently in DB
+    q = Article.objects.all()
+    q.delete()
+
     # extracting data in json format
     data = r.json()
-
-    print(data)
     add_to_db(data)
 
 def process_title(title):
@@ -112,16 +110,6 @@ def cosine_similarity(tokens_a, tokens_b):
     # Extract similarity between doc_a and doc_b
     similarity_score = similarity_matrix[0, 1]
     return similarity_score
-
-def copy_test():
-    #just to copy and paste into terminal for testing
-    # python manage.py shell
-    from NewsApp.utils import retrieve_more_articles
-    retrieve_more_articles()
-
-    from NewsApp.utils import cosine_similarity
-    cosine_similarity(Article.objects.get(id=1).processed_title,Article.objects.get(id=2).processed_title)
-    print("Overlap:", set(Article.objects.get(id=1).processed_title) & set(Article.objects.get(id=2).processed_title))
 
 def init_biases():
     Sources = [

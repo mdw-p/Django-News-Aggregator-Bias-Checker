@@ -1,6 +1,9 @@
-from django.shortcuts import redirect, render
+from datetime import timedelta
+from django.shortcuts import render
+from django.utils import timezone
 from NewsApp.models import Article
-from .utils import check_data_age, retrieve_more_articles, add_to_db, cosine_similarity
+from .utils import retrieve_more_articles, cosine_similarity
+from .fetch_metadata import FetchMetadata
 
 #NEWSAPI KEY: ####
 #Bitcoin EXAMPLE: GET https://newsapi.org/v2/everything?q=bitcoin&apiKey=####
@@ -9,10 +12,19 @@ from .utils import check_data_age, retrieve_more_articles, add_to_db, cosine_sim
 
 def render_articles(request):
     # check age of FetchMetadata: (find method that allows for first use)
-    retrieve_more_articles()
-    
+    metadata = FetchMetadata()
+    if metadata.is_first() == True:
+        # if it is the first time that server is being used
+        metadata.set_time()
+        retrieve_more_articles()
+    else:
+        # check age of data - if older than 5 then refresh, if new then leave
+        if (metadata.last_loaded - timezone.now()) > timedelta(minutes=1):
+            #if data older than 5 mins:
+            metadata.set_time()
+            retrieve_more_articles()
     headlines = Article.objects.all()
-    return render(request,"draft.html",context={"articles":headlines,"title":"Today's Headlines"})
+    return render(request,"headlines.html",context={"articles":headlines,"title":"Today's Headlines"})
 
 
 def generate_bias_view(request, id):
