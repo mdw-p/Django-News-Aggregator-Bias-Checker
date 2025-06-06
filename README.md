@@ -55,6 +55,8 @@ Make sure you are in the following folder - the OUTER AggregatorSite folder:
 ```
 Then, in the terminal run
 ```
+python manage.py makemigrations
+python manage.py migrate
 python manage.py flush
 ```
 Then, enter yes:
