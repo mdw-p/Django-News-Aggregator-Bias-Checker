@@ -1,7 +1,13 @@
 <h1>News Aggregator + Bias Checker</h1>
 This repo is for a News Aggregator + Bias Checker using Python, Django, NewsAPI to get articles and Sci-kit-learn for NLP.
 
-In order to run this program you will need to create a MySQL server, then a .env file with the following paramters in it:
+In order to run this program you will need to create a MySQL server, then create a database.
+
+In the MySQL workbench, type the following command:
+```
+CREATE DATABASE dbname CHARACTER SET utf8mb4;
+```
+Then create a .env file with the following paramters in it:
 ```
 DB_NAME=Name of MySQL database you have created
 DB_USER=Username for MySQL database you have created
