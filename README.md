@@ -3,11 +3,13 @@ This repo is for a News Aggregator + Bias Checker using Python, Django, NewsAPI 
 
 In order to run this program you will need to create a MySQL server, then create a database.
 
-In the MySQL workbench, type the following command:
+1. Clone repo
+
+2. In the MySQL workbench, type the following command:
 ```
 CREATE DATABASE dbname CHARACTER SET utf8mb4;
 ```
-Then create a .env file with the following paramters in it:
+3. Then create a .env file with the following paramters in it:
 ```
 DB_NAME=Name of MySQL database you have created
 DB_USER=Username for MySQL database you have created
@@ -19,7 +21,7 @@ NEWS_API_KEY= Valid API Key for NewsAPI
 ```
 You can get a NewsAPI key for free, from: https://newsapi.org/register
 
-Put this .env file in the OUTSIDE AggregatorSite Folder - folder structure should look like this:
+5. Put this .env file in the OUTSIDE AggregatorSite Folder - folder structure should look like this:
 ```
 AgreggatorSite/
       -> AggregatorSite/
@@ -29,11 +31,11 @@ AgreggatorSite/
       -> manage.py
 ```
 
-Commands to install:
+6. Commands to install:
 ```
 pip install -r requirements.txt
 ```
-Then, from the terminal:
+7. Then, from the terminal, install dependencies for NLTK (language processing):
 
 ```
 import nltk
@@ -44,6 +46,8 @@ nltk.download('punkt')
 
 cd AggregatorSite
 ```
+8. Set up database
+
 Make sure you are in the following folder - the OUTER AggregatorSite folder:
 ```
 *** AgreggatorSite/ ***
@@ -73,7 +77,7 @@ init_biases()
 
 quit()
 ```
-Finally, to run the program, enter in the shell:
+9. Finally, to run the program, enter in the shell:
 ```
 python manage.py runserver
 ```
