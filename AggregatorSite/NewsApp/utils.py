@@ -1,9 +1,10 @@
 from datetime import timedelta
 from pathlib import Path
+from django.db import DataError, IntegrityError
 from django.utils import timezone
 import json
 import os
-from NewsApp.models import Article, Source
+from NewsApp.models import Article, CustomUser, Source
 from .fetch_metadata import FetchMetadata
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
@@ -22,18 +23,24 @@ def add_to_db(data):
         # query for article.source.name in Source objects in db.
         if not Article.objects.filter(title=article["title"]).exists():
             # if not in DB, then try to add to DB
-            try:
+            if Source.objects.filter(name=article["source"]["name"]).exists():
                 # if source in DB, get source
                 source = Source.objects.get(name=article["source"]["name"])
-            except:
-                # if source not in DB, create source
-                source = Source(
-                    name=article["source"]["name"],
-                    website="", # Unknown Website
-                    bias=0 # 0 = Unknown Bias
-                )
-                source.save()
-            new_article = Article(
+            else:
+                # if source not in DB, try to create source
+                try:
+                    source = Source(
+                        name=article["source"]["name"],
+                        website="", # Unknown Website
+                        bias=0 # 0 = Unknown Bias
+                    )
+                    source.save()
+                except IntegrityError:
+                    print(f"{article["title"][:20]} had null source name field")
+                    # skip article
+                    continue
+            try:
+                new_article = Article(
                 source=source,
                 source_name=article["source"]["name"],
                 author=article["author"],
@@ -45,16 +52,14 @@ def add_to_db(data):
                 content=article["content"],
                 processed_title=process_title(article["title"]),
                 )
-            try:
                 new_article.save()
                 
-            # refine exception statement with type of error thrown when duplicate found
-            except Exception as ex:
-                #if article already in database
-                print(f"{article["title"]} failed to save to DB")
-                template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-                message = template.format(type(ex).__name__, ex.args)
-                print(message)
+            except IntegrityError:
+                # If article missing parameters (e.g. no image url, previous article but with new title etc.)
+                print(f"{article["title"][:20]} Failed to save to DB - bad parameters")
+            except DataError:
+                # If article has title/author/image url too long for the columns - somewhat common
+                print(f"{article["title"][:20]} Failed to save to DB - parameters too long for columns")
 
 def retrieve_more_articles():
     URL_list = []
@@ -89,7 +94,8 @@ def process_title(title):
     # check if words in stop_words
     filtered_title = [lemmatizer.lemmatize(w) for w in tokenized_title if not w.lower() in stop_words]
 
-    #return filtered title MINUS last word, which is ALWAYS the source name in this format
+    #return filtered title MINUS last word, which is ALWAYS the source name in this format.
+
     return json.dumps(filtered_title[0:-1])
 
 def cosine_similarity(tokens_a, tokens_b):
@@ -174,4 +180,13 @@ def init_biases():
 ] 
     for row in Sources:
         Source.objects.get_or_create(name=row[0], bias=row[1])
-        print(f"{row[0]},{row[1]} created")
+
+def clear_db():
+    # python manage.py flush occasionally does not work, so backup function provided
+
+    all_sources = Source.objects.all()
+    all_sources.delete()
+    all_articles = Article.objects.all()
+    all_articles.delete()
+    all_users = CustomUser.objects.all()
+    all_users.delete()
