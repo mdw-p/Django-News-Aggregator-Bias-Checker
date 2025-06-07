@@ -20,51 +20,57 @@ load_dotenv(os.path.join(BASE_DIR, '.env'))
 def add_to_db(data):
     for article in data["articles"]:
         # query for article.source.name in Source objects in db.
-        try:
-            # if in DB
-            source = Source.objects.get(name=article["source"]["name"])
-        except:
-            # code to create source
-            source = Source(
-                name=article["source"]["name"],
-                website="", # Unknown Website
-                bias=0 # 0 = Unknown Bias
-            )
-            source.save()
-        new_article = Article(
-            source=source,
-            source_name=article["source"]["name"],
-            author=article["author"],
-            title=article["title"],
-            description=article["description"],
-            url=article["url"],
-            urlToImage=article["urlToImage"],
-            publishedAt=article["publishedAt"],
-            content=article["content"],
-            processed_title=process_title(article["title"]),
-            )
-        try:
-            new_article.save()
-            
-        # refine exception statement with type of error thrown when duplicate found
-        except Exception as ex:
-            #if article already in database
-            print(f"{article["title"]} failed to save to DB")
-            template = "An exception of type {0} occurred. Arguments:\n{1!r}"
-            message = template.format(type(ex).__name__, ex.args)
-            print(message)
+        if not Article.objects.filter(title=article["title"]).exists():
+            # if not in DB, then try to add to DB
+            try:
+                # if source in DB, get source
+                source = Source.objects.get(name=article["source"]["name"])
+            except:
+                # if source not in DB, create source
+                source = Source(
+                    name=article["source"]["name"],
+                    website="", # Unknown Website
+                    bias=0 # 0 = Unknown Bias
+                )
+                source.save()
+            new_article = Article(
+                source=source,
+                source_name=article["source"]["name"],
+                author=article["author"],
+                title=article["title"],
+                description=article["description"],
+                url=article["url"],
+                urlToImage=article["urlToImage"],
+                publishedAt=article["publishedAt"],
+                content=article["content"],
+                processed_title=process_title(article["title"]),
+                )
+            try:
+                new_article.save()
+                
+            # refine exception statement with type of error thrown when duplicate found
+            except Exception as ex:
+                #if article already in database
+                print(f"{article["title"]} failed to save to DB")
+                template = "An exception of type {0} occurred. Arguments:\n{1!r}"
+                message = template.format(type(ex).__name__, ex.args)
+                print(message)
 
 def retrieve_more_articles():
-    URL = "https://newsapi.org/v2/everything?q='the'&apiKey=" + os.environ['NEWS_API_KEY']
-    r = requests.get(url = URL)
+    URL_list = []
+    # get articles on a list of hot topics + the headlines
+    URL_list.append("https://newsapi.org/v2/everything?q='AI'&apiKey=" + os.environ['NEWS_API_KEY'])
+    URL_list.append("https://newsapi.org/v2/everything?q='Trump'&apiKey=" + os.environ['NEWS_API_KEY'])
+    URL_list.append("https://newsapi.org/v2/everything?q='Starmer'&apiKey=" + os.environ['NEWS_API_KEY'])
+    URL_list.append("https://newsapi.org/v2/top-headlines?country=us&apiKey=" + os.environ['NEWS_API_KEY'])
+    for URL in URL_list:
+        r = requests.get(url = URL)
 
-    # delete articles currently in DB
-    q = Article.objects.all()
-    q.delete()
+        # extracting data in json format
+        data = r.json()
 
-    # extracting data in json format
-    data = r.json()
-    add_to_db(data)
+        #check that returned data is not API giving error:
+        add_to_db(data)
 
 def process_title(title):
     # Regular expression to delete punctuation 
@@ -166,5 +172,6 @@ def init_biases():
     ("Wired", 3),
     ("The Verge", 3),
 ] 
-    for name, bias in Sources:
-        Source.objects.create(name=name, bias=bias)
+    for row in Sources:
+        Source.objects.get_or_create(name=row[0], bias=row[1])
+        print(f"{row[0]},{row[1]} created")

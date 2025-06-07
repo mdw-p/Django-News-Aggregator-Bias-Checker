@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
 
 #Source -> E.g. BBC,CNN,etc.
 class Source(models.Model):
@@ -28,3 +30,12 @@ class Article(models.Model):
     publishedAt = models.DateTimeField()
     content = models.TextField(blank=True)
 
+    class Meta:
+        ordering = ["publishedAt"]
+
+class CustomUser(AbstractUser):
+    #field to track feed of subscribed news sources
+    saved_sources = models.ManyToManyField(Source)
+
+    class Meta(AbstractUser.Meta):
+        swappable = 'AUTH_USER_MODEL'

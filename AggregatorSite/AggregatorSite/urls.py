@@ -23,4 +23,5 @@ urlpatterns = [
     path('', RedirectView.as_view(url='/NewsApp/Headlines', permanent=False), name='index'),
     path('NewsApp/',include('NewsApp.urls')),
     path('admin/', admin.site.urls),
+    path('accounts/', include('django.contrib.auth.urls'))
 ]
