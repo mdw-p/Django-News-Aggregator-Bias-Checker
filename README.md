@@ -72,20 +72,8 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py flush
 ```
-Then, enter yes:
+Then, enter yes.
 
-Then, enter in the terminal:
-```
-python manage.py shell
-```
-Then, in the shell:
-```
-from NewsApp.utils import init_biases
-
-init_biases()
-
-quit()
-```
 9. Finally, to run the program, enter in the shell:
 ```
 python manage.py runserver
