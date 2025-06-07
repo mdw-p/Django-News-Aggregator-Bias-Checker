@@ -37,6 +37,11 @@ pip install -r requirements.txt
 ```
 7. Then, from the terminal, install dependencies for NLTK (language processing):
 
+Open python with
+```
+python.exe
+```
+Then, use
 ```
 import nltk
 
@@ -44,7 +49,10 @@ nltk.download('stopwords')
 nltk.download('punkt')
 nltk.download('punkt_tab')
 nltk.download('wordnet')
-
+quit()
+```
+And then,
+```
 cd AggregatorSite
 ```
 8. Set up database
